@@ -115,7 +115,7 @@ try:
                 """
                 
                 # 모델명을 최신 버전으로 변경
-                model = genai.GenerativeModel("gemini-2.5-flash")
+                model = genai.GenerativeModel("gemini-3.5-flash")
                 response = model.generate_content(prompt)
                 
                 st.success("분석 완료!")
