@@ -24,7 +24,7 @@ def get_garmin_data():
             dist_km = round(act['distance'] / 1000, 2)
             dur_sec = int(act['duration'])
             
-            # 누적 시간 포맷팅 (시:분:초 또는 분:초)
+            # 누적 시간 포맷팅
             hrs = dur_sec // 3600
             mins = (dur_sec % 3600) // 60
             secs = dur_sec % 60
@@ -63,7 +63,7 @@ try:
         col2.metric("최근 평균 페이스", df.iloc[0]['평균 페이스(분/km)'])
         col3.metric("최근 심박수", f"{df.iloc[0]['평균 심박수']} bpm")
         
-        # 1. 월별 러닝 마일리지 차트 (스크롤 압박 해소)
+        # 1. 월별 러닝 마일리지 차트
         st.write("### 📊 월별 러닝 마일리지")
         monthly_df = df.groupby('년월')['거리(km)'].sum().reset_index()
         st.bar_chart(monthly_df.set_index('년월'))
@@ -74,7 +74,7 @@ try:
         weekly_df.columns = ['주차', '총 거리(km)']
         st.dataframe(weekly_df.set_index('주차'), use_container_width=True)
 
-        # 3. 훈련 상세 로그 (요청하신 순서 적용)
+        # 3. 훈련 상세 로그
         st.write("### 📝 훈련 상세 로그")
         display_df = df[['날짜', '거리(km)', '평균 페이스(분/km)', '누적 시간', '평균 심박수']]
         st.dataframe(display_df, use_container_width=True)
@@ -114,7 +114,8 @@ try:
                 또한 피로도를 고려해 내일 신을 러닝화(아디다스 EVO SL, 아식스 메가블라스트, 아디다스 아디오스 프로 4 중 선택)와 추천 훈련 강도를 작성해 주세요.
                 """
                 
-                model = genai.GenerativeModel("gemini-1.5-flash")
+                # 모델명을 최신 버전으로 변경
+                model = genai.GenerativeModel("gemini-2.5-flash")
                 response = model.generate_content(prompt)
                 
                 st.success("분석 완료!")
